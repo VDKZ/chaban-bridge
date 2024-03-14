@@ -1,0 +1,14 @@
+pre-commit==3.6.2
+
+# Mypy
+django-filter-stubs==0.1.*
+django-stubs==4.2.*
+djangorestframework-stubs==3.14.*
+types-requests==2.31.0.*
+types-PyYAML==6.0.12.*
+
+# Linting
+black==23.9.*
+flake8==6.1.*
+isort==5.12.*
+mypy==1.4.*

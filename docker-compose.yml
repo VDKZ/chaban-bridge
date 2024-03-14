@@ -1,0 +1,43 @@
+version: '3.9'
+services:
+  chaban_bridge:
+    container_name: chaban_app
+    networks:
+      - chaban_bridge
+    env_file:
+      - .env
+    environment:
+      - DJANGO_SETTINGS_MODULE=chaban_bridge.settings.development
+      - DJANGO_CREATESU_OPTIONS=
+      - DJANGO_SUPERUSER_EMAIL=admin@admin.fr
+      - GUNICORN_WORKERS=2
+    build:
+      context: ./
+      dockerfile: Dockerfile
+      target: dev
+    depends_on:
+      - postgres
+    ports:
+      - 8000:8000
+    volumes:
+      - ./chaban_bridge:/home/alex/chaban_bridge
+
+  postgres:
+    image: 'postgres:14.2'
+    networks:
+      - chaban_bridge
+    container_name: chaban_postgres
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:?err}
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+      - ./postgres/create_db.sh:/docker-entrypoint-initdb.d/create_db.sh
+
+networks:
+  chaban_bridge:
+    driver: bridge

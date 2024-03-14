@@ -1,0 +1,54 @@
+repos:
+  # Backend
+  - repo: local
+    hooks:
+      - id: isort
+        name: isort
+        language: system
+        entry: isort
+        files: ^chaban_bridge/
+        types: [python]
+        exclude: '(migrations)'
+        args:
+          - '--resolve-all-configs'
+
+  - repo: local
+    hooks:
+      - id: black
+        name: black
+        language: system
+        entry: black
+        files: ^chaban_bridge/
+        types: [python]
+        exclude: '(migrations)'
+        args:
+          - '--quiet'
+
+  - repo: local
+    hooks:
+      - id: flake8
+        name: flake8
+        language: system
+        entry: flake8
+        args:
+          - '--config=.flake8'
+        files: ^chaban_bridge/
+        types: [python]
+        exclude: '(migrations)'
+
+  - repo: local
+    hooks:
+      - id: mypy
+        name: mypy
+        language: python
+        entry: mypy
+        require_serial: true
+        args:
+          [
+            --ignore-missing-imports,
+            --disallow-untyped-defs,
+            --config,
+            mypy.ini,
+          ]
+        types: [python]
+        exclude: '(test_*)|(settings.py)|(manage.py)|(migrations)'
