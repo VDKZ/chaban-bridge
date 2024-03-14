@@ -1,4 +1,5 @@
 pre-commit==3.6.2
+factory-boy==3.3.0
 
 # Mypy
 django-filter-stubs==0.1.*
