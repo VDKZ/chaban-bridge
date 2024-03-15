@@ -1,5 +1,6 @@
 # Third-party
 import factory
+from user.tests.factories import OrganizationFactory
 
 # Application
 from jobs.enums import ExecutionStatus, JobFrequency, JobType
@@ -7,7 +8,8 @@ from jobs.models import Execution, Job
 
 
 class JobFactory(factory.django.DjangoModelFactory):
-    name = "Mon Pont Chaban"
+    organization = factory.SubFactory(OrganizationFactory)
+    name = factory.Sequence(lambda x: f"job n{x}")
     type = JobType.CHABAN
     frequency = JobFrequency.DAILY
 
