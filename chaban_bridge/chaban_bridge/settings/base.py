@@ -26,7 +26,7 @@ SECRET_KEY = "django-insecure-bm!!0*x**6p**%&9n(d123t@+uf)-z$th=7!yt(3%8a1s)(crr
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["0.0.0.0"]
+ALLOWED_HOSTS = ["0.0.0.0", "localhost"]
 
 
 # Application definition
@@ -39,11 +39,14 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     # Third-party
+    "django_celery_beat",
+    "django_celery_results",
     "drf_spectacular",
     "rest_framework",
     # Application
     "core",
     "jobs",
+    "user",
 ]
 
 MIDDLEWARE = [
@@ -101,6 +104,8 @@ DATABASES = {
     }
 }
 
+AUTH_USER_MODEL = "user.User"
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -143,7 +148,6 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-
 REST_FRAMEWORK = {
     "DEFAULT_RENDERER_CLASSES": [
         "rest_framework.renderers.JSONRenderer",
@@ -154,3 +158,12 @@ REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.AllowAny"],
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
+
+# Celery
+
+CELERY_CACHE_BACKEND = "default"
+CELERY_RESULT_BACKEND = "django-db"
+
+# Channels
+
+ASGI_APPLICATION = "project.asgi.application"

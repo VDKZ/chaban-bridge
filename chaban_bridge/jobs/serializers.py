@@ -25,7 +25,7 @@ class JobSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Job
-        fields = ["id", "name", "type", "frequency", "executions"]
+        fields = ["id", "organization", "name", "type", "frequency", "executions"]
 
     def validate(self, validated_data: dict) -> dict:
         type = validated_data["type"]

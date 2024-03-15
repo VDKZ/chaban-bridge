@@ -1,12 +1,19 @@
+# Third-party
+from user.models import Organization
+
 # Django
 from django.db import models
+from django.db.models.fields.related import ForeignKey
 
 # Application
 from core.models import LifeCycleModel
 from jobs.enums import ExecutionStatus, JobFrequency, JobType
 
 
-class Job(models.Model):
+class Job(LifeCycleModel):
+    organization = ForeignKey(
+        Organization, null=False, on_delete=models.CASCADE, related_name="jobs"
+    )
     name = models.CharField(max_length=50)
     type = models.CharField(
         max_length=25,
@@ -20,6 +27,9 @@ class Job(models.Model):
         default=JobFrequency.DAILY,
         blank=True,
     )
+
+    class Meta:
+        unique_together = ("organization", "name")
 
     def __str__(self) -> str:
         return self.name

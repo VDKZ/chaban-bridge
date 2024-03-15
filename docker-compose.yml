@@ -2,8 +2,6 @@ version: '3.9'
 services:
   chaban_bridge:
     container_name: chaban_app
-    networks:
-      - chaban_bridge
     env_file:
       - .env
     environment:
@@ -21,11 +19,11 @@ services:
       - 8000:8000
     volumes:
       - ./chaban_bridge:/home/alex/chaban_bridge
+    links:
+      - redis
 
   postgres:
     image: 'postgres:14.2'
-    networks:
-      - chaban_bridge
     container_name: chaban_postgres
     env_file:
       - .env
@@ -38,6 +36,7 @@ services:
       - ./data/postgres:/var/lib/postgresql/data
       - ./postgres/create_db.sh:/docker-entrypoint-initdb.d/create_db.sh
 
-networks:
-  chaban_bridge:
-    driver: bridge
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"

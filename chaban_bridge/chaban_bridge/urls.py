@@ -11,6 +11,7 @@ import jobs.views as job_views
 
 router = routers.DefaultRouter()
 router.register("jobs", job_views.JobViewSet, basename="jobs")
+router.register("executions", job_views.ExecutionViewSet, basename="executions")
 
 
 urlpatterns = [

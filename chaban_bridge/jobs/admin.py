@@ -5,12 +5,10 @@ from django.contrib import admin
 from .models import Execution, Job
 
 
-# TODO remove that before prod
-# can be usefull in initial test phase
 @admin.register(Job)
 class JobAdmin(admin.ModelAdmin):
     model = Job
-    list_display = ("name", "type", "frequency")
+    list_display = ("organization", "name", "type", "frequency")
 
 
 @admin.register(Execution)

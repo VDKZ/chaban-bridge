@@ -32,7 +32,6 @@ RUN python -m pip install --upgrade pip setuptools wheel && rm -rf ~/.cache/pip
 
 CMD bash
 
-
 FROM deps as dev
 
 ENV APP_EXEC_MODE_RUNSERVER=1
